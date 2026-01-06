@@ -1,5 +1,4 @@
 # ECT-HDGCN
-# Course Project Report  
 ## Exploring Euler Characteristic Transform (ECT) for Skeleton-Based Action Recognition
 
 ---
