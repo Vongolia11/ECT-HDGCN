@@ -132,3 +132,27 @@ All results are obtained under the same evaluation protocol.
 This course project systematically explores **Euler Characteristic Transform (ECT)** on top of HD-GCN.
 
 By evaluating multiple ECT integration strategies, I demonstrate that a **simple ECT-fusion design** is both effective and efficient, improving upon a strong HD-GCN baseline without modifying its core architecture.
+---
+
+## 🔁 Reproducibility and Replication Guide
+
+This section describes how to **reproduce the experimental results** reported in this project.
+
+All experiments are conducted by **extending the official HD-GCN codebase**, following the original data processing and training protocols.
+
+---
+
+### 🧩 Dependencies
+
+- Python ≥ 3.6  
+- PyTorch ≥ 1.10.0  
+- PyYAML == 5.4.1  
+- torchpack == 0.2.2  
+- matplotlib, einops, sklearn, tqdm, tensorboardX, h5py  
+
+Install required packages and dependencies:
+
+```bash
+pip install -r requirements.txt
+pip install -e torchlight
+
