@@ -25,9 +25,6 @@ Through extensive experiments, I find that a simple ECT feature fusion strategy 
   - Joint and Bone streams
   - Chest-centered coordinate normalization
 
-**Important clarification**:  
-Chest-centered coordinate normalization is part of the original HD-GCN design and is **not** a contribution of this project.
-
 ---
 
 ## 🧪 Scope of My Contribution
