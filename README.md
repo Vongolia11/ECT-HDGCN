@@ -98,12 +98,15 @@ This design avoids unnecessary architectural complexity while preserving complem
 ---
 
 ## 📊 Experimental Results  
-**NTU RGB+D 60 — Cross-Subject (xsub)**
+**NTU RGB+D 60 — Cross-Subject (Chest-Centered, CoM = Chest)**
+
+All results are obtained using the official HD-GCN configuration files  
+`joint_com_1.yaml` and `bone_com_1.yaml`, which adopt **chest-centered coordinate normalization**.
 
 | Method | HD-GCN Paper | This Project |
 |------|--------------:|-------------:|
-| Joint Stream | 90.4 | **90.57** |
-| Bone Stream | 90.7 | **91.07** |
+| Joint Stream (`joint_com_1.yaml`) | 90.4 | **90.57** |
+| Bone Stream (`bone_com_1.yaml`) | 90.7 | **91.07** |
 | Joint + Bone (Ensemble) | 92.4 | **92.61** |
 
 ---
