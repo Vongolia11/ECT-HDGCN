@@ -211,10 +211,7 @@ python main.py \
 ECT-HDGCN uses the same configuration files, with the ECT-fusion model enabled:
 
 ```bash
-python main.py \
-  --config ./config/nturgbd-cross-subject/joint_com_1.yaml \
-  --model model.ect_fusion.Model \
-  --device 0
+python main.py --config ./config/nturgbd-cross-subject/joint_com_1.yaml --device 0
 ```
 
 Bone stream follows the same procedure using `bone_com_1.yaml`.
