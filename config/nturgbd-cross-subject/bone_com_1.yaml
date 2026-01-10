@@ -35,7 +35,6 @@ model_args:
     labeling_mode: 'spatial'
     CoM: 1
 
-#optim
 weight_decay: 0.0004
 base_lr: 0.1
 warm_up_epoch: 5
@@ -44,5 +43,5 @@ warm_up_epoch: 5
 device: [0]
 batch_size: 64
 test_batch_size: 64
-num_epoch: 90
+num_epoch: 115
 nesterov: True
