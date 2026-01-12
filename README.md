@@ -211,21 +211,7 @@ python main.py \
 
 ---
 
-## 🧪 Testing
 
-To evaluate a trained model and save prediction scores:
-
-```bash
-python main.py \
-  --config <work_dir>/config.yaml \
-  --work-dir <work_dir> \
-  --phase test \
-  --save-score True \
-  --weights <work_dir>/best_model.pt \
-  --device 0
-```
-
----
 
 ## 🔗 Ensemble Evaluation
 
