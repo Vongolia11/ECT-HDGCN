@@ -182,6 +182,9 @@ python get_raw_skes_data.py
 python get_raw_denoised_data.py
 python seq_transformation.py
 ```
+⚠️ **Note on Data Processing**
+
+Running `seq_transformation.py` for NTU RGB+D 60 may result in the process being terminated (`Killed`) due to memory constraints, as the script allocates large intermediate arrays during data alignment.
 
 ---
 
