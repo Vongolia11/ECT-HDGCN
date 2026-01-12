@@ -168,7 +168,6 @@ data/
 ├── ntu/
 ├── ntu120/
 └── NW-UCLA/
-    └── all_sqe/
 ```
 
 ---
