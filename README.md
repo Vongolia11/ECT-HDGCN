@@ -249,6 +249,5 @@ This project systematically explores **Euler Characteristic Transform (ECT)** on
 
 By evaluating multiple ECT integration strategies, it demonstrates that a **simple ECT-fusion design** is both effective and robust, improving performance over a strong HD-GCN baseline without modifying its core architecture.
 
-```
 
 
