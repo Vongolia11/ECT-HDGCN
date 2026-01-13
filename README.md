@@ -106,6 +106,10 @@ All results are obtained using the official HD-GCN configuration files
 | Bone Stream (`bone_com_1.yaml`) | 90.7 | **91.07** |
 | Joint + Bone (Ensemble) | 92.4 | **92.61** |
 
+**Note on Benchmark Difficulty.**  
+NTU RGB+D 60 is a highly competitive and well-studied benchmark, where performance has been extensively optimized by prior work.  
+As a result, further improvements over strong baselines are generally difficult to obtain, and even modest accuracy gains are non-trivial.
+
 ---
 
 ## 🛠 Environment Setup (Verified)
