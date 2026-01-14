@@ -17,7 +17,7 @@ Another strong and widely adopted baseline is:
 
 - **HD-GCN (ICCV)**  
   *Adaptive Hyper-Graph Convolution Network for Skeleton-Based Action Recognition*  
-  https://openaccess.thecvf.com/content/ICCV2021/papers/Zhou_Adaptive_Hyper-Graph_Convolution_Network_for_Skeleton-Based_Human_Action_Recognition_ICCV_2021_paper.pdf
+  https://arxiv.org/pdf/2208.10741
 
 HD-GCN achieves strong performance by hierarchically decomposing skeleton graphs and applying attention-guided hierarchy aggregation. It already includes **chest-centered coordinate normalization**, which is treated as part of the baseline in this project.
 
