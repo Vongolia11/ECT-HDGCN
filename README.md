@@ -15,7 +15,7 @@ In particular, recent studies such as **Block-GCN** explicitly incorporate conce
 
 Another strong and widely adopted baseline is:
 
-- **HD-GCN (ICCV)**  
+- **HD-GCN (ICCV 2023)**  
   *Adaptive Hyper-Graph Convolution Network for Skeleton-Based Action Recognition*  
   https://arxiv.org/pdf/2208.10741
 
