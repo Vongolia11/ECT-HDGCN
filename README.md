@@ -19,7 +19,7 @@ Another strong and widely adopted baseline is:
   *Hierarchically Decomposed Graph Convolutional Networks for Skeleton-Based Action Recognition*  
   https://arxiv.org/pdf/2208.10741
 
-HD-GCN achieves strong performance by hierarchically decomposing skeleton graphs and applying attention-guided hierarchy aggregation. It already includes **chest-centered coordinate normalization**, which is treated as part of the baseline in this project.
+HD-GCN achieves strong performance by hierarchically decomposing skeleton graphs and applying attention-guided hierarchy aggregation. 
 
 ---
 
