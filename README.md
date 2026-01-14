@@ -95,7 +95,7 @@ I systematically explored multiple ECT-based designs, including:
 ### 3.4 Direction Design
 
 - A small number of **fixed, approximately orthogonal directions** is sufficient
-- Learnable directions tend to overfit
+- Empirically, learnable projection directions did not yield consistent improvements in our experiments and were more prone to overfitting compared to fixed, well-initialized directions.
 - Proper initialization is more important than learnability
 
 This confirms that **ECT does not require heavy parameterization** to be effective.
