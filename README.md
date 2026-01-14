@@ -1,117 +1,140 @@
-# 🧠 ECT-HDGCN
-## Exploring Euler Characteristic Transform (ECT) on Top of HD-GCN
+# 🧠 ECT-HDGCN  
+**Euler Characteristic Transform for Skeleton-Based Action Recognition**
 
 ---
 
-## 📌 Abstract
+## 1. Motivation and Background
 
-Graph Convolutional Networks (GCNs) are widely used for skeleton-based action recognition and have achieved strong performance.  
-Among them, HD-GCN introduces a hierarchically decomposed graph structure together with attention-guided hierarchy aggregation, enabling effective modeling of both structurally adjacent and distant joint relations.
+Graph Convolutional Networks (GCNs) have become the dominant paradigm for skeleton-based action recognition due to their ability to model structured human body topology. Recent works have shown that **topological information** can further improve performance beyond purely graph-based representations.
 
-In this course project, **HD-GCN is taken as a fixed baseline**.  
-The goal is **not to redesign the graph structure**, but to explore whether **topological features derived from Euler Characteristic Transform (ECT)** can further improve skeleton-based action recognition, and how ECT should be integrated in a simple and effective manner.
+In particular, recent studies such as **Block-GCN** explicitly incorporate concepts from **Topological Data Analysis (TDA)** to enhance topology awareness in skeleton graphs:
 
-Through extensive experiments, this project finds that a **simple ECT feature fusion strategy (ECT-fusion)** consistently outperforms more complex ECT-based designs.
+- **Block-GCN (CVPR 2024)**  
+  *Redefine Topology Awareness for Skeleton-Based Action Recognition*  
+  https://openaccess.thecvf.com/content/CVPR2024/papers/Zhou_BlockGCN_Redefine_Topology_Awareness_for_Skeleton-Based_Action_Recognition_CVPR_2024_paper.pdf
 
----
+Another strong and widely adopted baseline is:
 
-## 🔍 Background and Baseline
+- **HD-GCN (ICCV)**  
+  *Adaptive Hyper-Graph Convolution Network for Skeleton-Based Action Recognition*  
+  https://openaccess.thecvf.com/content/ICCV2021/papers/Zhou_Adaptive_Hyper-Graph_Convolution_Network_for_Skeleton-Based_Human_Action_Recognition_ICCV_2021_paper.pdf
 
-- **Baseline Model**: HD-GCN (Hierarchically Decomposed Graph Convolutional Network)
-- **Key Components**:
-  - Hierarchically Decomposed Graph (HD-Graph)
-  - Attention-guided Hierarchy Aggregation (A-HA)
-  - Joint and Bone streams
-  - Chest-centered coordinate normalization
+HD-GCN achieves strong performance by hierarchically decomposing skeleton graphs and applying attention-guided hierarchy aggregation. It already includes **chest-centered coordinate normalization**, which is treated as part of the baseline in this project.
 
 ---
 
-## 🧪 Scope of My Contribution
+## 2. Project Idea
 
-This project focuses exclusively on **Euler Characteristic Transform (ECT)**.
+Inspired by the success of TDA-based methods (e.g., persistence diagrams in Block-GCN), this project explores a different topological representation:
 
-Explored designs include:
+> **Euler Characteristic Transform (ECT)**
 
-- ECT-guided topological edge construction  
-- ECT-based gating mechanisms  
-- Multi-scale temporal ECT modeling  
-- Learnable ECT projection directions  
-- Simple feature-level ECT fusion (**ECT-fusion**)  
+Compared to persistence diagrams, ECT:
+- Is computationally efficient
+- Captures global topological structure across multiple directions
+- Provides a vectorized representation suitable for neural networks
 
-After extensive experimentation:
+To the best of my knowledge, **ECT has not been previously applied to skeleton-based action recognition**.
 
-> **A simple ECT-fusion strategy is the most effective and robust design.**
+The core question of this project is:
+
+> *Can ECT provide complementary topological information to HD-GCN, and what is the simplest and most effective way to integrate it?*
 
 ---
 
-## 🧩 Euler Characteristic Transform (ECT)
+## 3. Method
 
-ECT is a topological descriptor that captures **global structural properties** of a shape.
+### 3.1 Baseline
+
+- Backbone: **HD-GCN**
+- Streams: Joint stream and Bone stream
+- Coordinate system: **Chest-centered (inherited from HD-GCN)**
+
+No modification is made to:
+- The original HD-GCN graph structure
+- Hierarchical decomposition strategy
+- Attention-guided hierarchy aggregation
+
+---
+
+### 3.2 Euler Characteristic Transform (ECT)
 
 In this project:
 
 - Skeleton joints are treated as a **3D point cloud**
-- No graph connectivity or bone topology is used during ECT computation
-- ECT is computed independently from the skeleton graph
+- No graph connectivity is used during ECT computation
+- ECT is computed independently from the GCN backbone
 
-This makes ECT complementary to graph-based modeling in HD-GCN.
+**ECT Computation Overview:**
 
----
-
-## ⚙️ ECT Computation (Implementation Overview)
-
-For each input skeleton sequence:
-
-1. Skeleton joints are represented as a 3D point cloud for each frame  
-2. The point cloud is centered by subtracting the mean joint position  
-3. Points are projected onto a small set of predefined 3D directions  
-4. For each direction, Euler characteristics are computed across multiple thresholds  
-5. The resulting ECT curves are mapped by an MLP into a fixed-dimensional feature vector  
-
-ECT features are computed in parallel with the HD-GCN backbone and fused at the feature level.
+1. Represent skeleton joints as a 3D point cloud
+2. Center the point cloud
+3. Project points onto a small set of predefined 3D directions
+4. Compute Euler characteristics across multiple thresholds
+5. Map ECT curves into a fixed-dimensional feature vector using an MLP
 
 ---
 
-## 🧭 Projection Directions
+### 3.3 Explored Integration Strategies
 
-- A small number of fixed, approximately orthogonal directions is sufficient  
-- Learnable directions do not improve performance  
-- Fixed directions are more stable and efficient  
+I systematically explored multiple ECT-based designs, including:
 
-Directions are initialized uniformly on the sphere and kept fixed during training.
+- ECT-guided topological edge construction
+- ECT-based gating mechanisms
+- Multi-scale temporal ECT
+- Learnable projection directions
+- **Simple feature-level ECT fusion (ECT-fusion)**
 
----
+**Key empirical finding:**
 
-## 🏁 Final Design: ECT-Fusion
-
-The final design adopts **ECT-fusion**:
-
-- HD-GCN extracts local spatio-temporal features  
-- ECT extracts global topological features  
-- The two representations are fused by **simple feature addition**
-
-This avoids unnecessary architectural complexity while preserving complementary information.
+> Increasing architectural complexity does not necessarily improve performance.  
+> The most effective strategy is **simple ECT feature fusion**.
 
 ---
 
-## 📊 Experimental Results  
-**NTU RGB+D 60 — Cross-Subject (Chest-Centered, CoM = Chest)**
+### 3.4 Direction Design
 
-All results are obtained using the official HD-GCN configuration files  
-`joint_com_1.yaml` and `bone_com_1.yaml`.
+- A small number of **fixed, approximately orthogonal directions** is sufficient
+- Learnable directions tend to overfit
+- Proper initialization is more important than learnability
+
+This confirms that **ECT does not require heavy parameterization** to be effective.
+
+---
+
+## 4. Experimental Results
+
+### Benchmark Difficulty Note
+
+**NTU RGB+D 60 is a highly saturated and competitive benchmark.**  
+The baseline models already achieve near-perfect training accuracy, making further improvements on the test set particularly difficult.  
+In this context, even modest performance gains are considered non-trivial.
+
+---
+
+### NTU RGB+D 60 — Cross-Subject  
+**Chest-Centered, CoM = Chest**
+
+All results are obtained using the official HD-GCN configuration files:
+- `joint_com_1.yaml`
+- `bone_com_1.yaml`
 
 | Method | HD-GCN Paper | This Project |
 |------|--------------:|-------------:|
-| Joint Stream (`joint_com_1.yaml`) | 90.4 | **90.57** |
-| Bone Stream (`bone_com_1.yaml`) | 90.7 | **91.07** |
+| Joint Stream | 90.4 | **90.57** |
+| Bone Stream | 90.7 | **91.07** |
 | Joint + Bone (Ensemble) | 92.4 | **92.61** |
 
-**Note on Benchmark Difficulty.**  
-NTU RGB+D 60 is a highly competitive and well-studied benchmark, where performance has been extensively optimized by prior work.  
-As a result, further improvements over strong baselines are generally difficult to obtain, and even modest accuracy gains are non-trivial.
+Notably, ECT shows particularly strong improvements on the **Bone stream**, which focuses on geometric orientations and limb directions.
 
 ---
 
+## 5. Reproducibility
+
+This repository has been **fully verified**.  
+Following the instructions below, all experiments (training, testing, and ensemble) can be reproduced.
+
+---
 ## 🛠 Environment Setup (Verified)
 
 The following environment configuration has been **fully verified to run successfully**.
@@ -249,9 +272,16 @@ python ensemble.py \
 
 ## 📝 Summary
 
-This project systematically explores **Euler Characteristic Transform (ECT)** on top of HD-GCN.
+This project demonstrates that Euler Characteristic Transform (ECT) provides meaningful and complementary topological information for skeleton-based action recognition.
 
-By evaluating multiple ECT integration strategies, it demonstrates that a **simple ECT-fusion design** is both effective and robust, improving performance over a strong HD-GCN baseline without modifying its core architecture.
+Through systematic experimentation, it shows that:
 
+Complex architectural changes are not always beneficial
+
+Simple ECT feature fusion is stable, effective, and parameter-efficient
+
+Even on a highly saturated benchmark, ECT leads to consistent improvements
+
+Overall, this project highlights ECT as a promising and lightweight topological tool for graph-based action recognition.
 
 
